@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// // 임시 생성 테스트용 테이블
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean? @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+// Stock Aggregate
+model Stock {
+  id      Int    @id @default(autoincrement())
+  basDt   String // YYYY MM DD 조회의 기준일, 통상 거래일
+  srtnCd  String // 종목코드보다 짧으면서 유일성이 보장되는 코드
+  isinCd  String // 국제 채권 식별번호. 유가증권(채권)의 국제인증 고유번호
+  mrktCtg String // 시장 구분 (KOSPI / KOSDAQ / KONEX 등)
+  itmsNm  String // 유가증권 국제인증 고유번호 코드 이름
+  crno    String // 종목의 법인등록번호
+  corpNm  String // 종목의 법인 명칭
+}

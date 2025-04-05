@@ -23,5 +23,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@nestjs/cqrs": "^11.0.3",
+    "@prisma/adapter-pg": "^6.5.0",
+    "pg": "^8.14.1"
+  }
 }
